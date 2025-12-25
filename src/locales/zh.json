@@ -1,0 +1,20 @@
+{
+  "header": {
+    "subtitle": "有更多問題嗎？",
+    "title": "GUM 專家為你服務！",
+    "description": "我們提供專業同中立嘅意見， 幫你作出最合適嘅選擇 。"
+  },
+  "contact": {
+    "general_enquiry": "如有一般查詢，歡迎致電本公司熱線 +852 28934402 或電郵至memberservice@gumhk.com 與我們聯絡。"
+  },
+  "disclaimer": "閣下使用本公司之預約服務或透過 WhatsApp與本公司聯絡，即表示同意本公司根據私隱政策所載條款，收集及使用閣下之個人資料。",
+  "service_hours": {
+    "title": "服務時間：",
+    "weekdays": "星期一至五：上午9:30 - 下午5:30",
+    "holidays": "星期六、日及公眾假期：休息"
+  },
+  "buttons": {
+    "book_appointment": " 立即預約諮詢",
+    "whatsapp": "WhatsApp"
+  }
+}

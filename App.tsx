@@ -4,6 +4,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { fetchSpecialists } from './src/services/api'; 
+import './src/i18n';
+import { useTranslation } from 'react-i18next';
 
 const queryClient = new QueryClient();
 
@@ -26,7 +28,7 @@ const TempDataCheck = () => {
   if (data) {
     console.log('=====================================');
     console.log('success：');
-    console.log(JSON.stringify(data, null, 2)); 
+    console.log(JSON.stringify(data, null, 2));
     console.log('=====================================');
   }
 
@@ -39,12 +41,14 @@ const TempDataCheck = () => {
 };
 
 
-export default function App() {
+export default function App() { 
+  const { t, i18n } = useTranslation();
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <QueryClientProvider client={queryClient}>
         
         <View style={styles.container}>
+          <Text style={styles.title}>{t('header.title')}</Text>
           <Text style={styles.title}>Data Layer Test</Text>
           
           <TempDataCheck />
