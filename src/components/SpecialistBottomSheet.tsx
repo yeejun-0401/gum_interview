@@ -1,9 +1,10 @@
 import React, { useCallback, useMemo, useRef } from 'react';
-import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Image, ActivityIndicator, ImageSourcePropType } from 'react-native';
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchSpecialists } from '../services/api';
+import { ErrorView } from './ErrorView';
 
 export const SpecialistBottomSheet = () => {
 
@@ -11,12 +12,35 @@ export const SpecialistBottomSheet = () => {
 
   const bottomSheetRef = useRef<BottomSheet>(null);
 
-  const snapPoints = useMemo(() => ['25%', '95%'], []);
+  const snapPoints = useMemo(() => ['15%', '95%'], []);
 
-  const { data: specialists, isLoading } = useQuery({
+  const { 
+    data: specialists, 
+    isLoading, 
+    isError,
+    refetch
+  } = useQuery({
     queryKey: ['specialists'],
     queryFn: fetchSpecialists,
+    retry: false,
   });
+
+  const localImageMap: Record<string, ImageSourcePropType> = {
+    backBottom: require('../../assets/bg.png'),
+  };
+  const getImageSource = (
+    photo: string | null
+  ): ImageSourcePropType => {
+
+    // photo from CMS
+    if (photo.startsWith('http')) {
+      return { uri: photo };
+    }
+
+    // local img
+    return localImageMap[photo] ;
+  };
+
 
   return (
     <BottomSheet
@@ -37,12 +61,20 @@ export const SpecialistBottomSheet = () => {
         {/* === specialist list === */}
         {isLoading ? (
           <ActivityIndicator size="large" color="#0000ff" />
+        ) : isError ? (
+          <ErrorView onRetry={refetch} />
         ) : (
           <View style={styles.listContainer}>
             {specialists?.map((specialist) => (
               <View key={specialist.id} style={styles.card}>
-                {/* 假裝有大頭貼 (用色塊代替) */}
-                <View style={[styles.photo, { backgroundColor: specialist.photo }]} />
+                {specialist.photo ? (
+                <Image
+                  style={styles.photo}
+                  source={getImageSource(specialist.photo)}
+                />
+              ) : (
+                <View style={styles.photo} />
+              )}
                 <Text style={styles.name}>
                   {specialist.firstName} {specialist.lastName}
                 </Text>
@@ -67,8 +99,11 @@ export const SpecialistBottomSheet = () => {
 
         {/* === disclaimer box === */}
         <View style={styles.disclaimerBox}>
+          <Image 
+          style = {styles.disclaimerImg}
+          source={require('../../assets/disclaimer-icon.png')} />
           <Text style={styles.disclaimerText}>
-            ⚠️ {t('disclaimer')}
+            {t('disclaimer')}
           </Text>
         </View>
         
@@ -133,7 +168,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(167, 167, 167, 1)',
   },
   name: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '700',
     color: 'rgba(85, 85, 85, 1)',
   },
@@ -163,6 +198,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(245, 230, 167, 1)',
     marginTop: 16,
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  disclaimerImg:{
+    width: 16,
+    height: 16,
+    marginRight: 8,
   },
   disclaimerText: {
     fontSize: 12,
