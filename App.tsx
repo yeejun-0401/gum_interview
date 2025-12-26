@@ -1,6 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ImageBackground,Linking } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground,Linking, Image } from 'react-native';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { fetchSpecialists } from './src/services/api'; 
@@ -52,7 +52,10 @@ export default function App() {
           style={styles.container}
           resizeMode="cover" // 讓圖片充滿整個螢幕，不會變形
         >
-          <Text style={styles.backBottom}>&lt;</Text>
+          <Image 
+            style={styles.backBottom}
+            source={require('./assets/back-bottom.png')}
+          />
           <StatusBar style="auto" />
 
           <SpecialistBottomSheet />
@@ -77,7 +80,7 @@ export default function App() {
             <View style={styles.blackButton}>
                 <Text 
                 style={styles.buttonText}
-                onPress={() => Linking.openURL('https://wa.me/85260300900?text=Hi%20GUM%20Specialist!%20I%20am%20contacting%20via%20the%20app.')}
+                onPress={() => Linking.openURL(`https://wa.me/85260300900?text=${t('prefill.url_encode')}`)}
                 >{t('buttons.whatsapp')}</Text>
             </View>
         </View>
@@ -101,9 +104,10 @@ const styles = StyleSheet.create({
   },
   backBottom: {
     position: 'absolute',
-    top: 60,
+    top: 70,
     left: 20,
-    fontSize: 24,
+    width: 20,
+    height: 20,
     // color: '#333',
   },
   section: {
