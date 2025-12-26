@@ -15,6 +15,15 @@
   },
   "buttons": {
     "book_appointment": " 立即預約諮詢",
-    "whatsapp": "WhatsApp"
+    "whatsapp": "WhatsApp",
+    "retry": "重試"
+  },
+  "error": {
+    "title": "糟糕！",
+    "message": "系統發生錯誤，請按此再試。"
+  },
+  "prefill": {
+    "message": "你好,我想了解更多有關強積金嘅資訊",
+    "url_encode": "%E4%BD%A0%E5%A5%BD%2C%E6%88%91%E6%83%B3%E4%BA%86%E8%A7%A3%E6%9B%B4%E5%A4%9A%E6%9C%89%E9%97%9C%E5%BC%B7%E7%A9%8D%E9%87%91%E5%98%85%E8%B3%87%E8%A8%8A"
   }
 }

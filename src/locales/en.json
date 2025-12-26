@@ -17,6 +17,15 @@
   },
   "buttons": {
     "book_appointment": "Book appointment",
-    "whatsapp": "WhatsApp us"
+    "whatsapp": "WhatsApp us",
+    "retry": "Retry"
+  },
+  "error": {
+    "title": "Oops!",
+    "message": "Oops! Something went wrong. Please close the app and try again."
+  },
+  "prefill": {
+    "message": "Hello, I would like to learn more about MPF information.",
+    "url_encode": "Hello%2C%20I%20would%20like%20to%20learn%20more%20about%20MPF%20information."
   }
 }
