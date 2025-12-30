@@ -1,16 +1,14 @@
 import React, { useCallback, useMemo, useRef } from 'react';
 import { View, Text, StyleSheet, Image, ActivityIndicator, ImageSourcePropType } from 'react-native';
-import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchSpecialists } from '../services/api';
 import { ErrorView } from './ErrorView';
+import DisclaimerIcon from '../assets/disclaimer-icon.png';
 
-export const SpecialistBottomSheet = () => {
+export const SpecialistList = () => {
 
   const { t } = useTranslation();
-
-  const bottomSheetRef = useRef<BottomSheet>(null);
 
   const snapPoints = useMemo(() => ['15%', '95%'], []);
 
@@ -43,74 +41,63 @@ export const SpecialistBottomSheet = () => {
 
 
   return (
-    <BottomSheet
-      ref={bottomSheetRef}
-      index={1} // 預設停在第二個抓點 (95%)
-      snapPoints={snapPoints}
-      enablePanDownToClose={false} // 禁止往下拉關閉，確保它一直都在
-    >
-      <BottomSheetScrollView contentContainerStyle={styles.contentContainer}>
-        
-        {/* === page title === */}
-        <View style={styles.header}>
-            <Text style={styles.subtitle}>{t('header.subtitle')}</Text>
-            <Text style={styles.title}>{t('header.title')}</Text>
-            <Text style={styles.description}>{t('header.description')}</Text>
-        </View>
-
-        {/* === specialist list === */}
-        {isLoading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
-        ) : isError ? (
-          <ErrorView onRetry={refetch} />
-        ) : (
-          <View style={styles.listContainer}>
-            {specialists?.map((specialist) => (
-              <View key={specialist.id} style={styles.card}>
-                {specialist.photo ? (
-                <Image
-                  style={styles.photo}
-                  source={getImageSource(specialist.photo)}
-                />
-              ) : (
-                <View style={styles.photo} />
-              )}
-                <Text style={styles.name}>
-                  {specialist.firstName} {specialist.lastName}
-                </Text>
-              </View>
-            ))}
+      <View>
+          {/* === page title === */}
+          <View style={styles.header}>
+              <Text style={styles.subtitle}>{t('header.subtitle')}</Text>
+              <Text style={styles.title}>{t('header.title')}</Text>
+              <Text style={styles.description}>{t('header.description')}</Text>
           </View>
-        )}
-
-        {/* === contact info === */}
-        <View style={styles.section}>
-          <Text style={styles.text}>
-            {t('contact.general_enquiry')}
-          </Text>
-          
-          <Text style={[styles.text, styles.linkText]}>
-            {t('contact.hotline', { phone: '+852 2893 4402' })}
-          </Text>
-          <Text style={[styles.text, styles.linkText]}>
-            {t('contact.email', { email: 'memberservice@gumhk.com' })}
-          </Text>
-        </View>
-
-        {/* === disclaimer box === */}
-        <View style={styles.disclaimerBox}>
-          <Image 
-          style = {styles.disclaimerImg}
-          source={require('../../assets/disclaimer-icon.png')} />
-          <Text style={styles.disclaimerText}>
-            {t('disclaimer')}
-          </Text>
-        </View>
-        
-        {/* <View style={{ height: 50 }} />  */}
-
-      </BottomSheetScrollView>
-    </BottomSheet>
+  
+          {/* === specialist list === */}
+          {isLoading ? (
+            <ActivityIndicator size="large" color="#0000ff" />
+          ) : isError ? (
+            <ErrorView onRetry={refetch} />
+          ) : (
+            <View style={styles.listContainer}>
+              {specialists?.map((specialist) => (
+                <View key={specialist.id} style={styles.card}>
+                  {specialist.photo ? (
+                  <Image
+                    style={styles.photo}
+                    source={getImageSource(specialist.photo)}
+                  />
+                ) : (
+                  <View style={styles.photo} />
+                )}
+                  <Text style={styles.name}>
+                    {specialist.firstName} {specialist.lastName}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          )}
+  
+          {/* === contact info === */}
+          <View style={styles.section}>
+            <Text style={styles.text}>
+              {t('contact.general_enquiry')}
+            </Text>
+            
+            <Text style={[styles.text, styles.linkText]}>
+              {t('contact.hotline', { phone: '+852 2893 4402' })}
+            </Text>
+            <Text style={[styles.text, styles.linkText]}>
+              {t('contact.email', { email: 'memberservice@gumhk.com' })}
+            </Text>
+          </View>
+  
+          {/* === disclaimer box === */}
+          <View style={styles.disclaimerBox}>
+            <Image 
+            style = {styles.disclaimerImg}
+            source={DisclaimerIcon} />
+            <Text style={styles.disclaimerText}>
+              {t('disclaimer')}
+            </Text>
+          </View>
+      </View>
   );
 };
 

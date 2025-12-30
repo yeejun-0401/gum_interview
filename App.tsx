@@ -1,12 +1,15 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ImageBackground,Linking, Image } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, Image } from 'react-native';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { fetchSpecialists } from './src/services/api'; 
 import './src/i18n';
 import { useTranslation } from 'react-i18next';
-import { SpecialistBottomSheet } from './src/components/SpecialistBottomSheet';
+import { PrimaryBottomSheet } from './src/components/PrimaryBottomSheet';
+import { SpecialistList } from './src/components/SpecialistList';
+import BackGroundImage from './assets/bg.png';
+import BackButton from './assets/back-button.png';
 
 const queryClient = new QueryClient();
 
@@ -48,42 +51,22 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <QueryClientProvider client={queryClient}>
         <ImageBackground 
-          source={require('./assets/bg.png')} // <--- 關鍵：讀取本地圖片要用 require
+          source={BackGroundImage}
           style={styles.container}
-          resizeMode="cover" // 讓圖片充滿整個螢幕，不會變形
+          resizeMode="cover"
         >
           <Image 
-            style={styles.backBottom}
-            source={require('./assets/back-bottom.png')}
+            style={styles.backButton}
+            source={BackButton}
           />
           <StatusBar style="auto" />
 
-          <SpecialistBottomSheet />
+          <SpecialistList />
+          <PrimaryBottomSheet />
           
         </ImageBackground>
 
-        {/* === service hours === */}
-        <View style={styles.sectionCentered}>
-          <Text style={styles.serviceTitle}>{t('service_hours.title')}</Text>
-          <Text style={styles.serviceText}>{t('service_hours.weekdays')}</Text>
-          <Text style={styles.serviceText}>{t('service_hours.holidays')}</Text>
-        </View>
         
-        {/* === bottom button === */}
-        <View style={styles.buttonContainer}>
-            <View style={styles.blackButton}>
-                <Text 
-                style={styles.buttonText}
-                onPress={() => Linking.openURL('https://gainmiles.simplybook.asia/v2/')}
-                >{t('buttons.book_appointment')}</Text>
-            </View>
-            <View style={styles.blackButton}>
-                <Text 
-                style={styles.buttonText}
-                onPress={() => Linking.openURL(`https://wa.me/85260300900?text=${t('prefill.url_encode')}`)}
-                >{t('buttons.whatsapp')}</Text>
-            </View>
-        </View>
 
       </QueryClientProvider>
     </GestureHandlerRootView>
@@ -102,7 +85,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
   },
-  backBottom: {
+  backButton: {
     position: 'absolute',
     top: 70,
     left: 20,
@@ -124,38 +107,5 @@ const styles = StyleSheet.create({
     color: '#666',
     marginBottom: 4,
     lineHeight: 20,
-  },
-  linkText: {
-    color: 'rgba(0, 122, 255, 1)',
-    fontWeight: '500',
-  },
-  serviceTitle: {
-    fontSize: 14,
-    color: 'rgba(85, 85, 85, 1)',
-    marginBottom: 4,
-  },
-  serviceText: {
-    fontSize: 14,
-    color: 'rgba(85, 85, 85, 1)',
-    fontWeight: '500',
-    marginBottom: 2,
-  },
-  buttonContainer: {
-    gap: 12,
-    paddingBottom: 40,
-    width: '90%',
-    margin: 'auto',
-  },
-  blackButton: {
-    backgroundColor: 'black',
-    paddingVertical: 16,
-    borderRadius: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
+  }
 });

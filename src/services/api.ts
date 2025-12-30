@@ -2,9 +2,9 @@ import { Specialist } from '../types/specialist';
 
 
 const MOCK_SPECIALISTS: Specialist[] = [
-  { id: '1', firstName: 'Kan', lastName: 'Chung', photo: 'backBottom' , sort: 1},
-  { id: '2', firstName: 'Alisa', lastName: 'Mak', photo: '', sort: 2 },
-  { id: '3', firstName: 'Justin', lastName: 'Liu', photo: '', sort: 3 },
+  { id: '1', firstName: 'Kan', lastName: 'Chung', photo: 'backBottom' },
+  { id: '2', firstName: 'Alisa', lastName: 'Mak', photo: '' },
+  { id: '3', firstName: 'Justin', lastName: 'Liu', photo: '' },
 ];
 
 let shouldFail = true; // 第一次失敗

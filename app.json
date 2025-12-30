@@ -20,7 +20,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.anonymous.gum_interview"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -28,6 +29,12 @@
     "plugins": [
       "expo-router",
       "expo-localization"
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "deb105f2-b982-44cc-a4b2-745fbdcc988f"
+      }
+    }
   }
 }

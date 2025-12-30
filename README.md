@@ -114,6 +114,9 @@ npx expo doctor
 
 ### Start the Development Server
 
+🤖 Open this link on your Android devices (or scan the QR code) to install the app:
+https://expo.dev/accounts/ivy41/projects/gum_interview/builds/11023fe8-87d5-4321-a556-583df1f12234
+
 ```bash
 npm start
 ```

@@ -4,5 +4,4 @@ export interface Specialist {
   firstName: string;
   lastName: string;
   photo: string;
-  sort: number;
 }
