@@ -1,7 +1,8 @@
-// 定義資料結構
+import { ImageSourcePropType } from 'react-native';
+
 export interface Specialist {
   id: string;
   firstName: string;
   lastName: string;
-  photo: string;
+  photo: ImageSourcePropType;
 }

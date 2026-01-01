@@ -1,8 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Image, ScrollView, Dimensions } from 'react-native';
-import '../i18n';
-import { useTranslation } from 'react-i18next';
 import { PrimaryBottomSheet } from '../components/PrimaryBottomSheet';
 import { SpecialistList } from '../components/SpecialistList';
 import BackGroundImage from '../../assets/bg.png';

@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
-import { View, Text, StyleSheet, Image, ActivityIndicator, ImageSourcePropType, Linking, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Linking, TouchableOpacity } from 'react-native';
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 
 export const PrimaryBottomSheet = () => {

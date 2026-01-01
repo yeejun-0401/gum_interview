@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, ActivityIndicator, ImageSourcePropType } from 'react-native';
+import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useSpecialist } from '../hooks/useSpecialist';
 import { ErrorView } from './ErrorView';
@@ -15,23 +15,6 @@ export const SpecialistList = () => {
     isError,
     refetch
   } = useSpecialist();
-
-  const localImageMap: Record<string, ImageSourcePropType> = {
-    backBottom: require('../../assets/bg.png'),
-  };
-  const getImageSource = (
-    photo: string | null
-  ): ImageSourcePropType => {
-
-    // photo from CMS
-    if (photo.startsWith('http')) {
-      return { uri: photo };
-    }
-
-    // local img
-    return localImageMap[photo] ;
-  };
-
 
   return (
       <View style={styles.homeContainer}>
@@ -54,7 +37,8 @@ export const SpecialistList = () => {
                   {specialist.photo ? (
                   <Image
                     style={styles.photo}
-                    source={getImageSource(specialist.photo)}
+                    source={specialist.photo} 
+                    resizeMode="cover"
                   />
                 ) : (
                   <View style={styles.photo} />
