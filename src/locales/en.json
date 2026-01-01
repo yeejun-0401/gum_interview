@@ -6,8 +6,10 @@
   },
   "contact": {
     "general_enquiry": "For general enquiries, please feel free to reach out to us using the method below:",
-    "hotline": "Hotline: {{phone}}",
-    "email": "Email address: {{email}}"
+    "hotline": "Hotline: ",
+    "hotline_info": "{{phone}}",
+    "email": "Email address: ",
+    "email_info": "{{email}}"
   },
   "disclaimer": "Your use of our appointment service or communication via WhatsApp constitutes your agreement to our collection and use of personal data as outlined in our privacy policy.",
   "service_hours": {

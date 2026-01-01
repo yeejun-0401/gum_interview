@@ -1,27 +1,20 @@
-import React, { useCallback, useMemo, useRef } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, Image, ActivityIndicator, ImageSourcePropType } from 'react-native';
-import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { fetchSpecialists } from '../services/api';
+import { useSpecialist } from '../hooks/useSpecialist';
 import { ErrorView } from './ErrorView';
-import DisclaimerIcon from '../assets/disclaimer-icon.png';
+import DisclaimerIcon from '../../assets/disclaimer-icon.png';
 
 export const SpecialistList = () => {
 
   const { t } = useTranslation();
-
-  const snapPoints = useMemo(() => ['15%', '95%'], []);
 
   const { 
     data: specialists, 
     isLoading, 
     isError,
     refetch
-  } = useQuery({
-    queryKey: ['specialists'],
-    queryFn: fetchSpecialists,
-    retry: false,
-  });
+  } = useSpecialist();
 
   const localImageMap: Record<string, ImageSourcePropType> = {
     backBottom: require('../../assets/bg.png'),
@@ -41,7 +34,7 @@ export const SpecialistList = () => {
 
 
   return (
-      <View>
+      <View style={styles.homeContainer}>
           {/* === page title === */}
           <View style={styles.header}>
               <Text style={styles.subtitle}>{t('header.subtitle')}</Text>
@@ -80,12 +73,18 @@ export const SpecialistList = () => {
               {t('contact.general_enquiry')}
             </Text>
             
-            <Text style={[styles.text, styles.linkText]}>
-              {t('contact.hotline', { phone: '+852 2893 4402' })}
-            </Text>
-            <Text style={[styles.text, styles.linkText]}>
-              {t('contact.email', { email: 'memberservice@gumhk.com' })}
-            </Text>
+            <View style={styles.textContainer}>
+              <Text style={styles.text}>{t('contact.hotline')}</Text>
+              <Text style={styles.linkText}>
+                {t('contact.hotline_info', { phone: '+852 2893 4402' })}
+              </Text>
+            </View>
+            <View style={styles.textContainer}>
+              <Text style={styles.text}>{t('contact.email')}</Text>
+              <Text style={styles.linkText}>
+                {t('contact.email_info', { email: 'memberservice@gumhk.com' })}
+              </Text>
+            </View>
           </View>
   
           {/* === disclaimer box === */}
@@ -102,9 +101,12 @@ export const SpecialistList = () => {
 };
 
 const styles = StyleSheet.create({
-  contentContainer: {
+  homeContainer: {
+    backgroundColor: '#fff',
     paddingHorizontal: 24,
-    paddingBottom: 50,
+    paddingVertical: 50,
+    borderRadius: 20,
+    width: '100%',
   },
   header: {
     marginBottom: 20,
@@ -168,24 +170,32 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     alignItems: 'center',
   },
+  textContainer:{
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   text: {
     fontSize: 14,
-    color: '#666',
+    fontWeight: '500',
+    color: 'rgba(85, 85, 85, 1)',
     marginBottom: 4,
     lineHeight: 20,
+    marginRight: 4,
   },
   linkText: {
-    color: 'rgba(0, 122, 255, 1)',
+    fontSize: 14,
     fontWeight: '500',
+    color: 'rgba(0, 122, 255, 1)',
+    marginBottom: 4,
   },
   disclaimerBox: {
     backgroundColor: 'rgba(255, 250, 229, 1)',
-    padding: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 16,
     borderRadius: 8,
     borderWidth: 1,
     borderColor: 'rgba(245, 230, 167, 1)',
     marginTop: 16,
-    display: 'flex',
     flexDirection: 'row',
   },
   disclaimerImg:{
@@ -197,5 +207,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: 'rgba(51, 51, 51, 1)',
     lineHeight: 18,
+    flex: 1,
   },
 });

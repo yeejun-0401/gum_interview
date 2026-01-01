@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo, useRef } from 'react';
-import { View, Text, StyleSheet, Image, ActivityIndicator, ImageSourcePropType, Linking, } from 'react-native';
+import React, { useRef } from 'react';
+import { View, Text, StyleSheet, Image, ActivityIndicator, ImageSourcePropType, Linking, TouchableOpacity } from 'react-native';
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
@@ -10,15 +10,11 @@ export const PrimaryBottomSheet = () => {
 
   const bottomSheetRef = useRef<BottomSheet>(null);
 
-  const snapPoints = useMemo(() => ['15%', '95%'], []);
-
-
-
   return (
     <BottomSheet
       ref={bottomSheetRef}
       index={1}
-      snapPoints={snapPoints}
+      snapPoints={['30%']}
       enablePanDownToClose={false}
     >
       <BottomSheetScrollView contentContainerStyle={styles.contentContainer}>
@@ -32,18 +28,22 @@ export const PrimaryBottomSheet = () => {
         
         {/* === bottom button === */}
         <View style={styles.buttonContainer}>
-            <View style={styles.primaryButton}>
-                <Text 
-                style={styles.buttonText}
+            <TouchableOpacity 
+                style={styles.primaryButton}
                 onPress={() => Linking.openURL('https://gainmiles.simplybook.asia/v2/')}
-                >{t('buttons.book_appointment')}</Text>
-            </View>
-            <View style={styles.primaryButton}>
-                <Text 
-                style={styles.buttonText}
+            >
+                <Text style={styles.buttonText}>
+                    {t('buttons.book_appointment')}
+                </Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+                style={styles.primaryButton}
                 onPress={() => Linking.openURL(`https://wa.me/85260300900?text=${t('prefill.url_encode')}`)}
-                >{t('buttons.whatsapp')}</Text>
-            </View>
+            >
+                <Text style={styles.buttonText}>
+                    {t('buttons.whatsapp')}
+                </Text>
+            </TouchableOpacity>
         </View>
 
       </BottomSheetScrollView>
