@@ -2,10 +2,13 @@ import React, { useRef } from 'react';
 import { View, Text, StyleSheet, Linking, TouchableOpacity } from 'react-native';
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useTranslation } from 'react-i18next';
+import { useSpecialistActions } from '../hooks/useSpecialistActions';
 
 export const PrimaryBottomSheet = () => {
 
   const { t } = useTranslation();
+  const isMember = false;
+  const { handlePrimaryAction, primaryButtonLabelKey } = useSpecialistActions(isMember);
 
   const bottomSheetRef = useRef<BottomSheet>(null);
 
@@ -29,10 +32,10 @@ export const PrimaryBottomSheet = () => {
         <View style={styles.buttonContainer}>
             <TouchableOpacity 
                 style={styles.primaryButton}
-                onPress={() => Linking.openURL('https://gainmiles.simplybook.asia/v2/')}
+                onPress={handlePrimaryAction} // ✅ UI 只負責綁定事件
             >
                 <Text style={styles.buttonText}>
-                    {t('buttons.book_appointment')}
+                    {t(primaryButtonLabelKey)} {/* ✅ UI 只負責顯示文字 */}
                 </Text>
             </TouchableOpacity>
             <TouchableOpacity 

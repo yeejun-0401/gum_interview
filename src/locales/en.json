@@ -6,10 +6,8 @@
   },
   "contact": {
     "general_enquiry": "For general enquiries, please feel free to reach out to us using the method below:",
-    "hotline": "Hotline: ",
-    "hotline_info": "{{phone}}",
-    "email": "Email address: ",
-    "email_info": "{{email}}"
+    "hotline": "<0>Hotline: </0><1>{{phone}}</1>",
+    "email": "<0>Email address: </0><1>{{email}}</1>"
   },
   "disclaimer": "Your use of our appointment service or communication via WhatsApp constitutes your agreement to our collection and use of personal data as outlined in our privacy policy.",
   "service_hours": {
@@ -19,6 +17,7 @@
   },
   "buttons": {
     "book_appointment": "Book appointment",
+    "contact": "Contact us",
     "whatsapp": "WhatsApp us",
     "retry": "Retry"
   },

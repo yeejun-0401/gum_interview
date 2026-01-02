@@ -23,7 +23,7 @@ i18n
     lng: deviceLanguage.startsWith('zh') ? 'zh' : 'en', // default language
     fallbackLng: 'en', // if selected language translations are not available, use this
     interpolation: {
-      escapeValue: false, // React 已經有防 XSS 攻擊，所以這裡設 false
+      escapeValue: false,
     },
   },(err) => {
     if(err){

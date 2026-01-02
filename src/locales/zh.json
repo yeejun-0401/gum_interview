@@ -6,10 +6,8 @@
   },
   "contact": {
     "general_enquiry": "如有一般查詢，歡迎致電本公司熱線 +852 28934402 或電郵至memberservice@gumhk.com 與我們聯絡。",
-    "hotline": "Hotline: ",
-    "hotline_info": "{{phone}}",
-    "email": "Email address: ",
-    "email_info": "{{email}}"
+    "hotline": "<0>連絡電話: </0><1>{{phone}}</1>",
+    "email": "<0>電郵地址: </0><1>{{email}}</1>"
   },
   "disclaimer": "閣下使用本公司之預約服務或透過 WhatsApp與本公司聯絡，即表示同意本公司根據私隱政策所載條款，收集及使用閣下之個人資料。",
   "service_hours": {
@@ -19,6 +17,7 @@
   },
   "buttons": {
     "book_appointment": " 立即預約諮詢",
+    "contact": "聯絡我們",
     "whatsapp": "WhatsApp",
     "retry": "重試"
   },

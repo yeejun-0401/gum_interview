@@ -54,10 +54,13 @@ This project is a mobile application that displays GUM specialists information w
 ### Key Libraries
 - **@gorhom/bottom-sheet** (^5.2.8) - Interactive bottom sheet component
 - **@tanstack/react-query** (^5.90.12) - Data fetching and state management
+- **@react-navigation/native** (^7.1.26) - Navigation framework
+- **@react-navigation/native-stack** (^7.9.0) - Native stack navigator
 - **react-native-reanimated** (~4.1.1) - Smooth animations
 - **react-native-gesture-handler** (~2.28.0) - Touch gestures
 - **i18next** + **react-i18next** - Internationalization
 - **expo-localization** - Device language detection
+- **expo-dev-client** (~6.0.20) - Enhanced development experience
 
 ---
 
@@ -117,35 +120,25 @@ npx expo doctor
 🤖 Open this link on your Android devices (or scan the QR code) to install the app:
 https://expo.dev/accounts/ivy41/projects/gum_interview/builds/11023fe8-87d5-4321-a556-583df1f12234
 
-```bash
-npm start
-```
-
-or
-
+**Using Expo Dev Client** (Recommended):
 ```bash
 npx expo start
 ```
+
+This project uses **expo-dev-client** for development, which provides:
+- Faster refresh and better debugging experience
+- Native module support
+- Custom development builds
 
 ### Running on Different Platforms
 
 After starting the development server, you have several options:
 
-#### Option 1: Physical Device (Recommended for Best Experience)
-1. Install **Expo Go** app on your phone
-2. Scan the QR code displayed in the terminal
-3. The app will load on your device
-
-#### Option 2: iOS Simulator (macOS only)
-```bash
-npm run ios
-```
-
-#### Option 3: Android Emulator
-```bash
-npm run android
-```
-
+#### Option : Development Build on Physical Device (Recommended)
+1. Install the development build from the link above
+2. Start the dev server with `npm start`
+3. Scan the QR code with your device camera
+4. The app will load in the development client
 
 ---
 
@@ -153,26 +146,30 @@ npm run android
 
 ```
 gum_interview/
-├── App.tsx                          # Main app entry point
+├── App.tsx                          # Main app entry with Navigation setup
 ├── index.ts                         # Expo entry file
 ├── app.json                         # Expo configuration
 ├── package.json                     # Dependencies and scripts
 ├── tsconfig.json                    # TypeScript configuration
 ├── assets/                          # Static assets (images, icons)
 │   ├── bg.png                       # Background image
-│   ├── back-bottom.png              # Back button icon
+│   ├── back-button.png              # Back button icon
 │   ├── disclaimer-icon.png          # Disclaimer warning icon
 │   └── ...
 └── src/
     ├── i18n.ts                      # i18next configuration
     ├── components/                  # Reusable UI components
-    │   ├── SpecialistBottomSheet.tsx    # Main specialist list component
-    │   └── ErrorView.tsx                # Error handling UI
-    ├── hooks/                       # Custom React hooks (future use)
+    │   ├── PrimaryBottomSheet.tsx   # Bottom sheet with service info
+    │   ├── SpecialistList.tsx       # Specialist list with data fetching
+    │   └── ErrorView.tsx            # Error handling UI with retry
+    ├── hooks/                       # Custom React hooks
+    │   ├── useSpecialist.ts         # React Query hook for fetching specialists
+    │   └── useSpecialistActions.ts  # Hook for handling member/non-member button actions
     ├── locales/                     # Translation files
     │   ├── en.json                  # English translations
     │   └── zh.json                  # Chinese translations
-    ├── screens/                     # Full page screens (future use)
+    ├── screens/                     # Screen components
+    │   └── HomeScreen.tsx           # Main home screen with layout
     ├── services/                    # API and data services
     │   └── api.ts                   # Mock API service
     ├── theme/                       # Design tokens (future use)
@@ -186,22 +183,47 @@ gum_interview/
 
 ### 1. **Component Architecture**
 
-- **SpecialistBottomSheet**: Main feature component
-  - Manages bottom sheet state and snap points
-  - Integrates React Query for data fetching
+- **App.tsx**: Root component
+  - Sets up React Navigation with native stack navigator
+  - Configures React Query client
+  - Wraps app with GestureHandlerRootView for gesture support
+  - Initializes i18n
+
+- **HomeScreen**: Main screen component
+  - Manages overall layout with ScrollView
+  - Displays background image and back button
+  - Coordinates SpecialistList and PrimaryBottomSheet
+  - Handles responsive spacing for bottom sheet
+
+- **SpecialistList**: Data-driven specialist display
+  - Uses useSpecialist hook for data fetching
+  - Displays specialist profiles with images
+  - Shows contact information and disclaimer
   - Handles loading, error, and success states
+
+- **PrimaryBottomSheet**: Service information panel
+  - Displays service hours
+  - Provides booking and WhatsApp action buttons
+  - Fixed at 30% snap point
+  - Uses BottomSheetScrollView for content
   
 - **ErrorView**: Reusable error display component
   - Provides consistent error UX
   - Includes retry functionality
 
-### 2. **State Management**
+### 2. **State Management & Navigation**
 
 - **React Query** (`@tanstack/react-query`):
-  - Handles asynchronous data fetching
+  - Handles asynchronous data fetching via useSpecialist hook
   - Built-in loading and error states
-  - Cache management and retry logic
+  - Cache management with queryKey: ['specialists']
+  - Automatic retries disabled for explicit error handling
   - Selected for its simplicity and powerful features
+
+- **React Navigation** (`@react-navigation/native`):
+  - Native stack navigator for screen management
+  - Header hidden for custom UI control
+  - Future-ready for multi-screen expansion
 
 ### 3. **Internationalization (i18n)**
 
@@ -209,7 +231,36 @@ gum_interview/
   - Auto-detects device language using `expo-localization`
   - Falls back to English if device language is not supported
   - Supports interpolation for dynamic values (e.g., phone numbers, emails)
+  - Uses `<Trans>` component for complex text formatting with multiple styles
+  - Locale-aware routing for external links (e.g., `zh-HK` vs `en-HK`)
   - Easy to extend with additional languages
+
+**Translation Structure Example**:
+```json
+// en.json
+{
+  "contact": {
+    "hotline": "<0>Hotline: </0><1>{{phone}}</1>",
+    "email": "<0>Email address: </0><1>{{email}}</1>"
+  },
+  "buttons": {
+    "book_appointment": "Book appointment",
+    "contact": "Contact us"
+  }
+}
+```
+
+**Usage with Trans Component**:
+```tsx
+<Trans
+  i18nKey="contact.hotline"
+  values={{ phone: '+852 2893 4402' }}
+  components={[
+    <Text style={styles.text} />,
+    <Text style={styles.linkText} />
+  ]}
+/>
+```
 
 ### 4. **Mock API Strategy**
 
@@ -247,24 +298,54 @@ export interface Specialist {
 
 ### Key Implementation Details
 
-1. **Bottom Sheet Integration**
-   - Uses `@gorhom/bottom-sheet` with two snap points: 15% and 95%
-   - Default opens at 95% (index: 1)
-   - Pan-down-to-close is disabled to keep sheet always visible
+1. **Screen Layout (HomeScreen)**
+   - ScrollView with absolute positioned background image
+   - Dynamic bottom spacer based on screen height (10% + 50px)
+   - Back button positioned absolutely at top-left
+   - Coordinates between scrollable content and fixed bottom sheet
 
-2. **Image Handling**
+2. **Custom Hooks**
+   - **useSpecialist**: Wraps React Query's useQuery
+     - Returns specialists data, loading, error states, and refetch function
+     - Configured with `retry: false` for explicit error handling
+     - Query key: ['specialists']
+   
+   - **useSpecialistActions**: Handles button behavior based on membership status
+     - Takes `isMember` boolean parameter
+     - Returns `handlePrimaryAction` function and `primaryButtonLabelKey`
+     - For members: Opens booking appointment URL
+     - For non-members: Opens "Contact Us" page with locale-aware routing
+     - Integrates with i18n for dynamic URL generation
+
+3. **Bottom Sheet Integration**
+   - **PrimaryBottomSheet**: Fixed at 30% height
+   - Uses `BottomSheetScrollView` for scrollable content
+   - Pan-down-to-close disabled to keep sheet always visible
+   - Contains service hours and action buttons
+   - Integrates `useSpecialistActions` hook for dynamic button behavior
+
+4. **Image Handling**
    - Supports both local images (via `require()`) and remote URLs
-   - Dynamic image source resolution in `getImageSource()` function
+   - Fallback to placeholder view when photo is empty string
+   - Static assets imported directly in components
 
-3. **Error Simulation**
+5. **Error Simulation**
    - First API call intentionally fails
-   - Demonstrates error UI and retry mechanism
+   - Demonstrates error UI and retry mechanism via refetch
    - Toggle `shouldFail` flag in `api.ts` to change behavior
+   - ErrorView component provides user-friendly retry option
 
-4. **External Links**
-   - Booking appointment: Opens SimplyBook URL
-   - WhatsApp: Opens WhatsApp with pre-filled message
-   - Uses `Linking.openURL()` from React Native
+6. **External Links**
+   - **Booking appointment**: Opens SimplyBook URL for members
+     - URL: https://gainmiles.simplybook.asia/v2/
+   - **Contact Us**: Opens GUM website contact page for non-members
+     - Dynamically routes to `zh-HK` or `en-HK` based on current language
+     - URL format: `https://www.gumhk.com/${localePath}/contact-us`
+   - **WhatsApp**: Opens WhatsApp with pre-filled message
+     - Phone: +852 60300900
+     - URL-encoded messages from i18n translations
+   - All implemented using `Linking.openURL()` from React Native
+   - Button behavior and labels controlled by `useSpecialistActions` hook
 
 ### Common Commands
 

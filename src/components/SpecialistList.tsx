@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native';
-import { useTranslation } from 'react-i18next';
+import { View, Text, StyleSheet, Image, ActivityIndicator, Linking } from 'react-native';
+import { useTranslation, Trans } from 'react-i18next';
 import { useSpecialist } from '../hooks/useSpecialist';
 import { ErrorView } from './ErrorView';
 import DisclaimerIcon from '../../assets/disclaimer-icon.png';
@@ -58,16 +58,24 @@ export const SpecialistList = () => {
             </Text>
             
             <View style={styles.textContainer}>
-              <Text style={styles.text}>{t('contact.hotline')}</Text>
-              <Text style={styles.linkText}>
-                {t('contact.hotline_info', { phone: '+852 2893 4402' })}
-              </Text>
+              <Trans
+                i18nKey="contact.hotline"
+                values={{ phone: '+852 2893 4402' }}
+                components={[
+                  <Text style={styles.text} />,
+                  <Text style={styles.linkText} />
+                ]}
+              />
             </View>
             <View style={styles.textContainer}>
-              <Text style={styles.text}>{t('contact.email')}</Text>
-              <Text style={styles.linkText}>
-                {t('contact.email_info', { email: 'memberservice@gumhk.com' })}
-              </Text>
+              <Trans
+                i18nKey="contact.email"
+                values={{ email: 'memberservice@gumhk.com' }}
+                components={[
+                  <Text style={styles.text} />,
+                  <Text style={styles.linkText} />
+                ]}
+              />
             </View>
           </View>
   
