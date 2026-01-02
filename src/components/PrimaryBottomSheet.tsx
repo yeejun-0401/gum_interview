@@ -32,10 +32,10 @@ export const PrimaryBottomSheet = () => {
         <View style={styles.buttonContainer}>
             <TouchableOpacity 
                 style={styles.primaryButton}
-                onPress={handlePrimaryAction} // ✅ UI 只負責綁定事件
+                onPress={handlePrimaryAction}
             >
                 <Text style={styles.buttonText}>
-                    {t(primaryButtonLabelKey)} {/* ✅ UI 只負責顯示文字 */}
+                    {t(primaryButtonLabelKey)}
                 </Text>
             </TouchableOpacity>
             <TouchableOpacity 
