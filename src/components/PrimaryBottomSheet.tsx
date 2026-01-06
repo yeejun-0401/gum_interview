@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { View, Text, StyleSheet, Linking, TouchableOpacity } from 'react-native';
-import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { useTranslation } from 'react-i18next';
 import { useSpecialistActions } from '../hooks/useSpecialistActions';
 
@@ -19,7 +19,7 @@ export const PrimaryBottomSheet = () => {
       snapPoints={['30%']}
       enablePanDownToClose={false}
     >
-      <BottomSheetScrollView contentContainerStyle={styles.contentContainer}>
+      <BottomSheetView style={styles.contentContainer}>
         
         {/* === service hours === */}
         <View style={styles.sectionCentered}>
@@ -48,7 +48,7 @@ export const PrimaryBottomSheet = () => {
             </TouchableOpacity>
         </View>
 
-      </BottomSheetScrollView>
+      </BottomSheetView>
     </BottomSheet>
   );
 };
