@@ -1,5 +1,5 @@
 import { Specialist } from '../types/specialist';
-
+import Photo from '../../assets/bg.png';
 
 const MOCK_SPECIALISTS: Specialist[] = [
   { id: '1', firstName: 'Kan', lastName: 'Chung', photo: require('../../assets/bg.png') },
