@@ -1,0 +1,32 @@
+{
+  "header": {
+    "subtitle": "Got more questions?",
+    "title": "GUM Specialists are here!",
+    "description": "We provide professional, impartial advice to help you find what's best for you"
+  },
+  "contact": {
+    "general_enquiry": "For general enquiries, please feel free to reach out to us using the method below:",
+    "hotline": "<0>Hotline: </0><1>{{phone}}</1>",
+    "email": "<0>Email address: </0><1>{{email}}</1>"
+  },
+  "disclaimer": "Your use of our appointment service or communication via WhatsApp constitutes your agreement to our collection and use of personal data as outlined in our privacy policy.",
+  "service_hours": {
+    "title": "Service Hours:",
+    "weekdays": "Monday- Friday: 9:30am - 5:30pm",
+    "holidays": "Saturday, Sunday & Public Holidays: Closed"
+  },
+  "buttons": {
+    "book_appointment": "Book appointment",
+    "contact": "Contact us",
+    "whatsapp": "WhatsApp us",
+    "retry": "Retry"
+  },
+  "error": {
+    "title": "Oops!",
+    "message": "Oops! Something went wrong. Please close the app and try again."
+  },
+  "prefill": {
+    "message": "Hello, I would like to learn more about MPF information.",
+    "url_encode": "Hello%2C%20I%20would%20like%20to%20learn%20more%20about%20MPF%20information."
+  }
+}
